@@ -19,11 +19,13 @@ env:
 steps:
   - type: Command
     timeoutInSeconds: 6000
-    name: "Terraform config"
+    name: "Upload Terraform config"
     command: |
       cd ${OCI_PRIMARY_SOURCE_DIR}
       cd terraform
-      cat variables.tf | envsubst
+      cat variables.tf | envsubst >variables.tf_tmp
+      cp variables.tf_tmp variables.tf
+      oci os object bulk-upload -ns ${NAMESPACE_NAME} -bn ${BUCKET_NAME} --src-dir . --overwrite --region ${REGION} --content-type auto
      
 
     onFailure:

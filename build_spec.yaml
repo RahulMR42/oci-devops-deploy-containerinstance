@@ -26,6 +26,7 @@ steps:
       echo "BUILDRUN_HASH: " $BUILDRUN_HASH
       export STATIC_IMAGE_TAG=${IMAGE_STATIC_TAG}
       export OBJECT_BUCKET_NAME=${BUCKET_NAME}
+      export OBJECT_NAMESPACE=${NAMESPACE_NAME}
 
   - type: Command
     timeoutInSeconds: 1200
@@ -47,7 +48,7 @@ steps:
       cp remote-backend_template.tf_tmp remote-backend_template.tf
       rm remote-backend_template.tf_tmp
       rm remote-backend_template.tf_tmp
-      oci os object bulk-upload -ns ${NAMESPACE_NAME} -bn ${BUCKET_NAME} --src-dir ${OCI_PRIMARY_SOURCE_DIR}/terraform --overwrite --region ${REGION} --content-type auto
+      oci os object bulk-upload -ns ${NAMESPACE_NAME} -bn ${BUCKET_NAME} --src-dir ${OCI_PRIMARY_SOURCE_DIR}/terraform --overwrite --region ${REGION} --content-type auto --prefix devops
      
     onFailure:
       - type: Command

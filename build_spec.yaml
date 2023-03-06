@@ -14,6 +14,7 @@ env:
   # For this Build to run, the Build Pipeline needs to have a BUILDRUN_HASH parameter set
   exportedVariables:
     - BUILDRUN_HASH
+    - STATIC_IMAGE_TAG
 
 steps:
   - type: Command
@@ -22,6 +23,7 @@ steps:
     command: |
       export BUILDRUN_HASH=`echo ${OCI_BUILD_RUN_ID} | rev | cut -c 1-7`
       echo "BUILDRUN_HASH: " $BUILDRUN_HASH
+      export STATIC_IMAGE_TAG=${IMAGE_STATIC_TAG}
 
   - type: Command
     timeoutInSeconds: 1200
@@ -54,9 +56,11 @@ steps:
         runAs: root
 
 
-#outputArtifacts:
-#  - name: sample
-#    type: DOCKER_IMAGE/BINARY
-#    # this location tag doesn't effect the tag used to deliver the container image
-#    # to the Container Registry
-#    location:
+outputArtifacts:
+  - name: python_app_dockerimage
+    type: DOCKER_IMAGE
+    location: python_fast_app:latest
+
+  - name: command_spec
+    type: BINARY
+    location: ${OCI_PRIMARY_SOURCE_DIR}/command_spec.yaml

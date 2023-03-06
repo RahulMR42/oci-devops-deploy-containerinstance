@@ -9,6 +9,6 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    version = os.getenv('version', default = '0.0.1')
+    version = os.getenv('version', default = 'latest')
     instance_name = os.getenv('instance_name',default= 'OCI CI Host')
-    return {"Message": f"With ❤️ from OCI Devops via OCI Container instance {instance_name}"}
+    return {"Message": f"With ❤️ from OCI Devops via OCI Container instance: {instance_name} with version: ${version}"}

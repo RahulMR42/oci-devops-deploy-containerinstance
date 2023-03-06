@@ -1,11 +1,11 @@
-terraform {
-  required_version = ">= 1.0"
-  required_providers {
-    oci = {
-      source  = "oracle/oci"
-    }
-  }
-}
+#terraform {
+#  required_version = ">= 1.0"
+#  required_providers {
+#    oci = {
+#      source  = "oracle/oci"
+#    }
+#  }
+#}
 
 provider "oci" {
   auth = "ResourcePrincipal"

@@ -1,3 +1,4 @@
+
 resource "oci_container_instances_container_instance" "test_container_instance" {
   availability_domain                  = var.availability_domain
   compartment_id                       = var.compartment_ocid

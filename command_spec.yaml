@@ -57,7 +57,7 @@ steps:
       cd ./terraform
       terraform version
       terraform providers
-      terraform init
+      terraform init -reconfigure
       terraform plan -out plan.out
       terraform refresh
       terraform apply plan.out

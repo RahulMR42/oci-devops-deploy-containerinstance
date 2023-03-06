@@ -23,7 +23,7 @@ steps:
     command: |
       cd ${OCI_PRIMARY_SOURCE_DIR}
       cd terraform
-      cat variables | envsubst
+      cat variables.tf | envsubst
      
 
     onFailure:

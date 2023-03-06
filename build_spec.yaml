@@ -15,6 +15,7 @@ env:
   exportedVariables:
     - BUILDRUN_HASH
     - STATIC_IMAGE_TAG
+    - OBJECT_BUCKET_NAME
 
 steps:
   - type: Command
@@ -24,6 +25,7 @@ steps:
       export BUILDRUN_HASH=`echo ${OCI_BUILD_RUN_ID} | rev | cut -c 1-7`
       echo "BUILDRUN_HASH: " $BUILDRUN_HASH
       export STATIC_IMAGE_TAG=${IMAGE_STATIC_TAG}
+      export OBJECT_BUCKET_NAME=${BUCKET_NAME}
 
   - type: Command
     timeoutInSeconds: 1200

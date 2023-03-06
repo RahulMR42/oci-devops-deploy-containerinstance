@@ -1,0 +1,43 @@
+version: 0.1
+component: command
+timeoutInSeconds: 10000
+shell: bash
+failImmediatelyOnError: true
+env:
+  variables:
+
+  vaultVariables:
+    aws_access_key_id: ocid1.vaultsecret.oc1.us-sanjose-1.amaaaaaayat6pyaai2imzaxryz3txkgik724kh66mahsfq57hirzw4z7zaqq
+    aws_secret_access_key: ocid1.vaultsecret.oc1.us-sanjose-1.amaaaaaayat6pyaaq4skuh5smh2fbevxianlmhrfc36hklvuk7foh5f3z4aa
+
+#inputArtifacts:
+#  - name: artifact-name
+#    type: GENERIC_ARTIFACT
+#    artifactId: "artifact-ocid"
+#    registryId: OCID of the Artifact Registry
+#    path: path of the artifact in the Registry
+#    version: version of the artifact
+#    location: target-location
+#  - name: artifact-name
+#    type: URL
+#    url: downloadable link
+#    location: target-location
+
+steps:
+  - type: Command
+    name: CredStoreSetup
+    shell: bash
+    timeoutInSeconds: 650
+    failImmediatelyOnError: true
+    command: |
+      echo "[default]" > cred_store
+      echo "aws_access_key_id=${aws_access_key_id}">>cred_store
+      echo "aws_secret_access_key=${aws_secret_access_key}">>cred_store
+      cat cred_store
+    onFailure:
+      - type: Command
+        command: |
+          echo "Handling Failure"
+          echo "Failure successfully handled"
+        timeoutInSeconds: 400
+

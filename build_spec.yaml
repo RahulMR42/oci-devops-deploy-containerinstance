@@ -13,10 +13,24 @@ env:
   # exportedVariables are made available to use as parameters in sucessor Build Pipeline stages
   # For this Build to run, the Build Pipeline needs to have a BUILDRUN_HASH parameter set
   exportedVariables:
-  #Variable to export and use with in further stages.
-
+    - BUILDRUN_HASH
 
 steps:
+  - type: Command
+    name: "Define unique image tag"
+    timeoutInSeconds: 40
+    command: |
+      export BUILDRUN_HASH=`echo ${OCI_BUILD_RUN_ID} | rev | cut -c 1-7`
+      echo "BUILDRUN_HASH: " $BUILDRUN_HASH
+
+  - type: Command
+    timeoutInSeconds: 1200
+    name: "Build container image"
+    command: |
+      cd ${OCI_PRIMARY_SOURCE_DIR}
+      cd python_app
+      docker build --pull --rm -t python_fast_app .    
+
   - type: Command
     timeoutInSeconds: 6000
     name: "Upload Terraform config"
@@ -25,9 +39,12 @@ steps:
       cd terraform
       cat variables.tf | envsubst >variables.tf_tmp
       cp variables.tf_tmp variables.tf
+      cat remote-backend_template.tf| envsubst > remote-backend_template.tf_tmp
+      cp remote-backend_template.tf_tmp remote-backend_template.tf
+      rm remote-backend_template.tf_tmp
+      rm remote-backend_template.tf_tmp
       oci os object bulk-upload -ns ${NAMESPACE_NAME} -bn ${BUCKET_NAME} --src-dir . --overwrite --region ${REGION} --content-type auto
      
-
     onFailure:
       - type: Command
         command: |

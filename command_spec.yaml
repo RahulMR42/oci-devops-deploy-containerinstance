@@ -27,7 +27,7 @@ steps:
   - type: Command
     name: TerraformSetup
     shell: bash
-    timeoutInSeconds: 650
+    timeoutInSeconds: 3500
     failImmediatelyOnError: true
     command: |
       echo "[default]" > cred_store
@@ -48,3 +48,22 @@ steps:
           echo "Failure successfully handled"
         timeoutInSeconds: 400
 
+  - type: Command
+    name: ApplyTerraform
+    shell: bash
+    timeoutInSeconds: 3500
+    failImmediatelyOnError: true
+    command: |
+      cd ./terraform
+      terraform version
+      terraform init -migrate-state
+      terraform plan -out plan.out
+      terraform refresh
+      terraform apply plan.out
+
+    onFailure:
+      - type: Command
+        command: |
+          echo "Handling Failure"
+          echo "Failure successfully handled"
+        timeoutInSeconds: 400

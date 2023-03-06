@@ -36,7 +36,7 @@ steps:
       mkdir terraform
       cp cred_store terraform/cred_store
       oci os object bulk-download -ns ${OBJECT_NAMESPACE} -bn ${OBJECT_BUCKET_NAME} --download-dir ./terraform --prefix devops_ --include '*.tf'
-      ls -ltr 
+      ls -ltr ./terraform/
 
     onFailure:
       - type: Command

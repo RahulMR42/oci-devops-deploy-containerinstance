@@ -56,7 +56,7 @@ steps:
       yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
       yum -y install terraform
       terraform version
-      terraform init -reconfigure
+      terraform init -reconfigure -upgrade
       terraform providers
       terraform plan -out plan.out
       terraform refresh

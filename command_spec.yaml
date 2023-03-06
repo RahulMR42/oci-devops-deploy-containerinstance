@@ -53,8 +53,7 @@ steps:
     command: |
       cd ./terraform
       terraform version
-      rm remote-backend_template.tf
-      ls
+      mv *_remote-backend_template.tf remote-backend_template.tf
       terraform init -reconfigure -upgrade
       terraform providers
       terraform plan -out plan.out

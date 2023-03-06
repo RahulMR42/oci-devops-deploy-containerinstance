@@ -16,6 +16,7 @@ env:
     - BUILDRUN_HASH
     - STATIC_IMAGE_TAG
     - OBJECT_BUCKET_NAME
+    - OBJECT_NAMESPACE
 
 steps:
   - type: Command

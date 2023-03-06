@@ -48,7 +48,7 @@ steps:
       cp remote-backend_template.tf_tmp remote-backend_template.tf
       rm remote-backend_template.tf_tmp
       rm variables.tf_tmp
-      oci os object bulk-upload -ns ${NAMESPACE_NAME} -bn ${BUCKET_NAME} --src-dir ${OCI_PRIMARY_SOURCE_DIR}/terraform --overwrite --region ${REGION} --content-type auto --prefix devops
+      oci os object bulk-upload -ns ${NAMESPACE_NAME} -bn ${BUCKET_NAME} --src-dir ${OCI_PRIMARY_SOURCE_DIR}/terraform --overwrite --region ${REGION} --content-type auto --prefix devops_
      
     onFailure:
       - type: Command

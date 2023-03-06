@@ -35,7 +35,7 @@ steps:
       echo "aws_secret_access_key=${aws_secret_access_key}">>cred_store
       mkdir terraform
       cp cred_store terraform/cred_store
-      oci os object bulk-download -ns ${OBJECT_NAMESPACE} -bn ${OBJECT_BUCKET_NAME} --download-dir ./terraform --prefix devops
+      oci os object bulk-download -ns ${OBJECT_NAMESPACE} -bn ${OBJECT_BUCKET_NAME} --download-dir ./terraform --prefix devops_ --include '*.tf'
       ls -ltr 
 
     onFailure:

@@ -56,7 +56,9 @@ steps:
       mv *_remote-backend_template.tf remote-backend_template.tf
       terraform init -reconfigure -upgrade
       terraform providers
-      cat /etc/fstab
+      df -h
+      pwd
+      uname
       ls -latr
       terraform plan -out plan.out
       terraform refresh

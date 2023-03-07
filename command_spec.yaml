@@ -57,6 +57,7 @@ steps:
     timeoutInSeconds: 3500
     failImmediatelyOnError: true
     command: |
+      cd /tmp/terraform
       ci_host_ocid=`terraform output containet_instance_id`
       echo "Restarting container instance ${ci_host_ocid}"
       oci container-instances container-instance restart --container-instance-id ${ci_host_ocid}

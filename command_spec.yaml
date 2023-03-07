@@ -43,6 +43,10 @@ steps:
       terraform init -migrate-state -upgrade
       echo "Attempting to apply with version ${BUILDRUN_HASH} ..."
       terraform apply --auto-approve
+      ci_host_ocid=`terraform output container_instance_id`
+      echo "Restarting container instance ${ci_host_ocid}"
+      oci container-instances container-instance restart --container-instance-id ${ci_host_ocid}
+
 
     onFailure:
       - type: Command
@@ -58,9 +62,6 @@ steps:
     failImmediatelyOnError: true
     command: |
       cd /tmp/terraform
-      ci_host_ocid=`terraform output containet_instance_id`
-      echo "Restarting container instance ${ci_host_ocid}"
-      oci container-instances container-instance restart --container-instance-id ${ci_host_ocid}
 
     onFailure:
       - type: Command

@@ -45,7 +45,7 @@ output "access_ip" {
   value = "Access python application via http://${data.oci_core_vnic.vnic_0_info.public_ip_address}"
 }
 
-output "containet_instance_id" {
+output "container_instance_id" {
   value = oci_container_instances_container_instance.test_container_instance.id
 }
 

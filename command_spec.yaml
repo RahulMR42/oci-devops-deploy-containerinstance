@@ -58,6 +58,7 @@ steps:
       cat cred_store
       terraform init -reconfigure -upgrade
       terraform providers
+      ls -latr
       terraform plan -out plan.out
       terraform refresh
       terraform apply plan.out

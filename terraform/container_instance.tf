@@ -32,6 +32,15 @@ resource "oci_container_instances_container_instance" "test_container_instance" 
   }
 }
 
+resource "null_resource" "restart_ci_host" {
+  provisioner "local-exec" {
+    command = <<-EOT
+    echo "Restarting container instance ${oci_container_instances_container_instance.test_container_instance.id}"
+    oci container-instances container-instance restart --container-instance-id ${oci_container_instances_container_instance.test_container_instance.id}
+    EOT
+  }
+}
+
 data  "oci_core_vnic" "vnic_0_info" {
   #Required
   vnic_id = oci_container_instances_container_instance.test_container_instance.vnics[0].vnic_id
@@ -40,7 +49,6 @@ data  "oci_core_vnic" "vnic_0_info" {
 output "Dev" {
   value = "Made with \u2764 by Oracle Developers"
 }
-
 
 output "access_ip" {
   value = "Access python application via http://${data.oci_core_vnic.vnic_0_info.public_ip_address}"

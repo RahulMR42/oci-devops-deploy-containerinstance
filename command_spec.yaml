@@ -53,7 +53,7 @@ steps:
       cd /tmp/terraform
       terraform version
       mv *_remote-backend_template.tf remote-backend_template.tf
-      terraform init -reconfigure -upgrade
+      terraform init -migrate-state -upgrade
       terraform providers
       df -h
       pwd

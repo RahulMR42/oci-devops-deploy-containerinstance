@@ -41,10 +41,25 @@ steps:
       terraform version
       mv *_remote-backend_template.tf remote-backend_template.tf
       terraform init -migrate-state -upgrade
-      terraform providers
-      terraform state rm null_resource.restart_ci_host
       echo "Attempting to apply with version ${BUILDRUN_HASH} ..."
       terraform apply --auto-approve
+
+    onFailure:
+      - type: Command
+        command: |
+          echo "Handling Failure"
+          echo "Failure successfully handled"
+        timeoutInSeconds: 400
+
+  - type: Command
+    name: RestartCInstanceHost
+    shell: bash
+    timeoutInSeconds: 3500
+    failImmediatelyOnError: true
+    command: |
+      ci_host_ocid=`terraform output containet_instance_id`
+      echo "Restarting container instance ${ci_host_ocid}"
+      oci container-instances container-instance restart --container-instance-id ${ci_host_ocid}
 
     onFailure:
       - type: Command

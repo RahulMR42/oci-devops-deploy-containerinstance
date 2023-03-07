@@ -43,10 +43,8 @@ steps:
       terraform init -migrate-state -upgrade
       terraform providers
       terraform state rm null_resource.restart_ci_host
-      terraform plan -out plan.out
-      terraform refresh
       echo "Attempting to apply with version ${BUILDRUN_HASH} ..."
-      terraform apply plan.out
+      terraform apply --auto-approve
 
     onFailure:
       - type: Command

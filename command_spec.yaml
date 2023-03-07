@@ -54,10 +54,9 @@ steps:
       cd ./terraform
       terraform version
       mv *_remote-backend_template.tf remote-backend_template.tf
-      cat remote-backend_template.tf
-      cat cred_store
       terraform init -reconfigure -upgrade
       terraform providers
+      cat /etc/fstab
       ls -latr
       terraform plan -out plan.out
       terraform refresh
